@@ -7,7 +7,7 @@ export default function TestQuiz() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/quiz")
+    fetch("https://quiz-api-1-9to7.onrender.com/api/quiz")
       .then((res) => res.json())
       .then((data) => {
         const shuffled = data.sort(() => 0.5 - Math.random());
