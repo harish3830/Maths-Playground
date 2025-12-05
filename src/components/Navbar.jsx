@@ -10,6 +10,9 @@ const links = [
   { to: "/calculator", label: "Calculator" },
   { to: "/table", label: "Multiplication Table" },
   { to: "/profitnloss", label: "Profit N Loss" },
+  { to: "/test", label:"Test"},
+  { to: "/area", label:"Area"}  
+
 ];
 
 export default function Navbar() {
@@ -17,11 +20,10 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top bar */}
+
       <nav className="flex items-center justify-between bg-white shadow px-4 py-3">
         <h1 className="text-xl font-bold">Maths Playground</h1>
 
-        {/* Desktop links */}
         <div className="hidden md:flex gap-3">
           {links.map((l) => (
             <Link
@@ -34,7 +36,6 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Hamburger for mobile */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-2xl focus:outline-none"
@@ -43,7 +44,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Sidebar for mobile */}
+
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${
           open ? "translate-x-0" : "-translate-x-full"
@@ -69,7 +70,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Overlay when sidebar is open */}
+
       {open && (
         <div
           className="fixed inset-0 bg-black/40 md:hidden"

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Link,
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
 
 import TableGenerator from "../components/Table";
 import PrimeChecker from "../components/PrimeChecker";
@@ -15,23 +9,48 @@ import GcdLcmFinder from "../components/GcdLcmFinder";
 import PercentageCalculator from "../components/PercentageCalculator";
 import Calculator from "../components/SimpleCalculator";
 import PnLCalculator from "../components/PnLCalculator";
+import TestQuiz from "../components/testquiz";
+import SimpleInterestCalculator from "../components/SimpleIntrest";
+import SalaryFinder from "../components/Salaryfinder";
+import Area from "../components/Area";
 
 export default function Home() {
-  const location = useLocation();
   const navigate = useNavigate();
-  const navigation = () => {
-    navigate("/");
-  };
+
   const tools = [
-    { name: "Prime Checker", path: "/prime" },
-    { name: "Factorial", path: "/factorial" },
-    { name: "Fibonacci", path: "/fibonacci" },
-    { name: "GCD & LCM", path: "/gcdlcm" },
-    { name: "Percentage", path: "/percentage" },
-    { name: "Calculator", path: "/calculator" },
-    { name: "Table Generator", path: "/table" },
-    { name: "Profit & Loss", path: "/profitnloss" },
+    { name: "Prime Checker", path: "/prime", element: <PrimeChecker /> },
+    { name: "Factorial", path: "/factorial", element: <FactorialCalculator /> },
+    { name: "Fibonacci", path: "/fibonacci", element: <FibonacciGenerator /> },
+    { name: "GCD & LCM", path: "/gcdlcm", element: <GcdLcmFinder /> },
+    { name: "Percentage", path: "/percentage", element: <PercentageCalculator /> },
+    { name: "Calculator", path: "/calculator", element: <Calculator /> },
+    { name: "Table Generator", path: "/table", element: <TableGenerator /> },
+    { name: "Profit & Loss", path: "/profitnloss", element: <PnLCalculator /> },
+    { name: "Test Quiz", path: "/test", element: <TestQuiz /> },
+    { name: "Interest", path: "/intrest", element: <SimpleInterestCalculator /> },
+    { name: "Salary Finder", path: "/salary", element: <SalaryFinder /> },
+    { name: "Area", path: "/area", element: <Area /> },
   ];
+
+  const Modal = ({ children }) => (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      onClick={() => navigate("/")} 
+    >
+      <div
+        className="relative bg-white rounded-xl p-6 shadow-2xl w-full max-w-lg max-h-[90vh] overflow-auto"
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <button
+          onClick={() => navigate("/")}
+          className="absolute top-2 right-2 text-gray-500 hover:text-black text-xl"
+        >
+          ✕
+        </button>
+        {children}
+      </div>
+    </div>
+  );
 
   return (
     <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen py-10 px-4">
@@ -43,6 +62,7 @@ export default function Home() {
           Quick, easy, and interactive tools to make your calculations fun.
         </p>
       </div>
+
 
       <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {tools.map((tool) => (
@@ -56,34 +76,15 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="max-w-3xl mx-auto mt-10 bg-white/70 rounded-xl p-4 shadow-lg">
-        <Routes>
+      <Routes>
+        {tools.map((tool) => (
           <Route
-            path="/"
-            element={
-              <p className="text-center text-gray-700">
-                Select a tool above to get started!
-              </p>
-            }
+            key={tool.path}
+            path={tool.path}
+            element={<Modal>{tool.element}</Modal>}
           />
-          <Route path="/prime" element={<PrimeChecker />} />
-          <Route path="/factorial" element={<FactorialCalculator />} />
-          <Route path="/fibonacci" element={<FibonacciGenerator />} />
-          <Route path="/gcdlcm" element={<GcdLcmFinder />} />
-          <Route path="/percentage" element={<PercentageCalculator />} />
-          <Route path="/calculator" element={<Calculator />} />
-          <Route path="/table" element={<TableGenerator />} />
-          <Route path="/profitnloss" element={<PnLCalculator />} />
-        </Routes>
-      </div>
-      {location.pathname !== "/" && (
-        <button
-          onClick={navigation}
-          className="max-w-3xl mx-auto mt-10 bg-white/70 rounded-xl p-4 shadow-lg"
-        >
-          Clear
-        </button>
-      )}
+        ))}
+      </Routes>
     </div>
   );
 }
